@@ -5,8 +5,10 @@ from django.template import loader
 from .models import User, FeelRate
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from .forms import LoginForm
 from datetime import datetime
+
+def handler_404(request, exception):
+    return render(request, '404.html')
 
 def home(request):
     return render(request, 'home.html')
