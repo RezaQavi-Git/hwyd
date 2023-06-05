@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from datetime import datetime, timedelta
 import json
+import random
+
 
 
 def handler_404(request, exception):
@@ -78,7 +80,6 @@ def rating(request):
         try:
             user = User.objects.get(email=email)
 
-            print(user)
             feel_rate = FeelRate(rate=rate, time=datetime.now().strftime("%Y-%m-%d"), reporter=user)
             feel_rate.save()
             user.list_of_feelings.add(feel_rate.id)
@@ -98,7 +99,6 @@ def history(request):
     email = request.COOKIES.get("email")
     user = User.objects.get(email=email)
 
-    print(user)
     now = datetime.now()
     past = now - timedelta(days=7)
 
@@ -110,16 +110,15 @@ def history(request):
         "labels": x_data,
         "datasets": [
             {
-                "label": "history",
+                "label": "Rates",
                 "data": y_data,
                 "borderColor": "green",
                 "fill": False,
             }
         ],
     }
-
     chart_data_json = json.dumps(chart_data)
-    return render(request, "test.html", {"chart_data_json": chart_data_json})
+    return render(request, "history.html", {"chart_data_json": chart_data_json})
 
 
 
