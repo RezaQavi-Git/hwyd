@@ -72,15 +72,18 @@ def signup(request):
     return render(request, "signup.html")
 
 
-def rating(request):
+def rate(request):
     if request.method == "POST":
-        email = request.POST["email"]
+
+        
+        email = request.COOKIES.get("email")
         rate = int(request.POST["rate"])
 
+        print(email, rate)
         try:
             user = User.objects.get(email=email)
 
-            feel_rate = FeelRate(rate=rate, time=datetime.now().strftime("%Y-%m-%d"), reporter=user)
+            feel_rate = FeelRate(rate=rate, time=datetime.now(), reporter=user)
             feel_rate.save()
             user.list_of_feelings.add(feel_rate.id)
             return redirect("home")
@@ -92,7 +95,7 @@ def rating(request):
 
         return render(request, "rating.html", {"error_message": error_message})
 
-    return render(request, "rating.html")
+    return redirect('home')
 
 
 def history(request):

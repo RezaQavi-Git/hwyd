@@ -71,35 +71,60 @@
       .history-button:hover {
         background-color: #0069d9;
       }
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .circular-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #e3eff5;
+        color: #fff;
+        font-size: 50px;
+        border: none;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .circular-button:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <img src="../resources/logo.png" alt="Logo" class="logo" />
       <p>Hello {{ nickname }}</p>
-      <form method="POST" action="/rating">
-        <label class="rating">
-          <input type="radio" name="rating" value="1" />
-          ★
-        </label>
-        <label class="rating">
-          <input type="radio" name="rating" value="2" />
-          ★
-        </label>
-        <label class="rating">
-          <input type="radio" name="rating" value="3" />
-          ★
-        </label>
-        <label class="rating">
-          <input type="radio" name="rating" value="4" />
-          ★
-        </label>
-        <label class="rating">
-          <input type="radio" name="rating" value="5" />
-          ★
-        </label>
+      <br />
+      <form method="POST" action="/rate">
+        {% csrf_token %}
+
+        <div class="button-container">
+          <button class="circular-button" name="rate" value="1">
+            &#128577;
+          </button>
+          <button class="circular-button" name="rate" value="2">
+            &#128542;
+          </button>
+          <button class="circular-button" name="rate" value="3">
+            &#128528;
+          </button>
+          <button class="circular-button" name="rate" value="4">
+            &#128516;
+          </button>
+          <button class="circular-button" name="rate" value="5">
+            &#128512;
+          </button>
+        </div>
       </form>
-      <button class="history-button primary"><a href="/history">History</a></button>
+      <hr />
+      <button class="history-button primary">
+        <a href="history">History</a>
+      </button>
     </div>
   </body>
 </html>
