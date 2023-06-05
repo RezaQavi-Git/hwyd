@@ -1,99 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login Form</title>
-    <style>
-      body {
-        background-color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-family: Arial, sans-serif;
-      }
-
-      .container {
-        width: 20%;
-        margin: auto auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      h2 {
-        text-align: center;
-      }
-
-      .form-group {
-        /* margin: auto; */
-        margin-bottom: 20px;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-
-      .form-group input {
-        width: 90%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-      }
-
-      .form-group button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 3px;
-        background-color: #4caf50;
-        color: #fff;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .form-group button:hover {
-        background-color: #45a049;
-      }
-
-      .switch-form {
-        text-align: center;
-        margin-top: 20px;
-      }
-
-      .switch-form a {
-        color: #007bff;
-        text-decoration: none;
-      }
-    </style>
+    <title>History</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 50%;
+      margin: auto auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
   <body>
     <div class="container">
-      <h2>Login</h2>
-      <form method="post" action="login">
-        {% csrf_token %} 
-      {% if error_message %}
-      <p>{{ error_message }}</p>
-      {% endif %}
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <div class="form-group">
-          <button type="submit">Login</button>
-        </div>
-      </form>
-      <div class="switch-form">
-        <p>Don't have an account? <a href="/signup">Sign up</a></p>
-      </div>
+      <canvas id="lineChart"></canvas>
     </div>
+    <script>
+      var chartData = JSON.parse("{{ chart_data_json|escapejs }}");
+      var ctx = document.getElementById("lineChart").getContext("2d");
+      var lineChart = new Chart(ctx, {
+        type: "line",
+        data: chartData,
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
   </body>
 </html>
