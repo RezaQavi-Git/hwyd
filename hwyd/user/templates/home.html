@@ -1,1 +1,88 @@
-<h1>HERE IS HOME</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      text-align: center;
+    }
+    
+    .logo {
+      max-width: 500px;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      font-size: 1.5rem;
+      color: #333333;
+    }
+    
+    form {
+      margin-top: 1rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 5rem;
+      color: #333333;
+    }
+    
+    input[type="radio"] {
+      display: none;
+    }
+    
+    label.rating {
+      display: inline-block;
+      cursor: pointer;
+      color: #999999;
+    }
+    
+    label.rating:hover,
+    label.rating:hover ~ label.rating,
+    input[type="radio"]:checked ~ label.rating {
+      color: #0ca8cf;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../resources/logo.png" alt="Logo" class="logo">
+    <p>Hello {{ nickname }}</p>
+    <form method="POST" action="/rating">
+      <label class="rating">
+        <input type="radio" name="rating" value="1">
+        ★
+      </label>
+      <label class="rating">
+        <input type="radio" name="rating" value="2">
+        ★
+      </label>
+      <label class="rating">
+        <input type="radio" name="rating" value="3">
+        ★
+      </label>
+      <label class="rating">
+        <input type="radio" name="rating" value="4">
+        ★
+      </label>
+      <label class="rating">
+        <input type="radio" name="rating" value="5">
+        ★
+      </label>
+    </form>
+  </div>
+</body>
+</html>
