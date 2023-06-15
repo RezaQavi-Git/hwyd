@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rated</title>
-</head>
-<body>
-    <h1>Rated</h1>
-</body>
+    <style>
+      body {
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      .circular-button {
+        border-radius: 5%;
+        background-color: #50bef6;
+        color: #fff;
+        font-size: 1.5rem;
+        border: none;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .circular-button:hover {
+        background-color: #008cc8;
+      }
+
+      .tick {
+        color: green;
+        font-size: 10rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="tick">&#10004;</h1>
+      <h3>Your rate successfully posted</h3>
+      <br /><br />
+      <a href="/">
+        <button class="circular-button">Back to Home</button>
+      </a>
+    </div>
+  </body>
 </html>

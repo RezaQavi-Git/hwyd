@@ -18,7 +18,7 @@ def handler_404(request, exception):
 def home(request):
     email = request.COOKIES.get("email")
     if email:
-        context = {"nickname": User.objects.get(email=email).get_nickname()}
+        context = {"nickname": User.objects.get(email=email).get_nickname().upper()}
         return render(request, "home.html", context)
     else:
         return redirect("login")
@@ -44,6 +44,13 @@ def login(request):
         return render(request, "login.html", {"error_message": error_message})
 
     return render(request, "login.html")
+
+
+def logout(request):
+    response = redirect("login")
+    response.delete_cookie('email')
+
+    return response
 
 
 def signup(request):
@@ -73,20 +80,16 @@ def signup(request):
 
 
 def rate(request):
-    if request.method == "POST":
-
-        
+    if request.method == "POST":     
         email = request.COOKIES.get("email")
         rate = int(request.POST["rate"])
-
-        print(email, rate)
         try:
             user = User.objects.get(email=email)
 
             feel_rate = FeelRate(rate=rate, time=datetime.now(), reporter=user)
             feel_rate.save()
             user.list_of_feelings.add(feel_rate.id)
-            return redirect("home")
+            return render(request, 'rated.html')
 
         except User.DoesNotExist:
             error_message = "User with the provided email does not exist"
@@ -104,23 +107,24 @@ def history(request):
 
     now = datetime.now()
     past = now - timedelta(days=7)
-
+    print(now, past)
     rates = user.get_rates(past, now)    
     x_data = [rate.get_time() for rate in rates]
     y_data = [rate.get_rate() for rate in rates]
-
+    print(x_data, y_data)
     chart_data = {
         "labels": x_data,
         "datasets": [
             {
                 "label": "Rates",
                 "data": y_data,
-                "borderColor": "green",
+                "borderColor": "#50bef6",
                 "fill": False,
             }
         ],
     }
     chart_data_json = json.dumps(chart_data)
+    print(chart_data_json)
     return render(request, "history.html", {"chart_data_json": chart_data_json})
 
 
