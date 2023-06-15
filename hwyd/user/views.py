@@ -107,11 +107,9 @@ def history(request):
 
     now = datetime.now()
     past = now - timedelta(days=7)
-    print(now, past)
     rates = user.get_rates(past, now)    
     x_data = [rate.get_time() for rate in rates]
     y_data = [rate.get_rate() for rate in rates]
-    print(x_data, y_data)
     chart_data = {
         "labels": x_data,
         "datasets": [
@@ -124,17 +122,7 @@ def history(request):
         ],
     }
     chart_data_json = json.dumps(chart_data)
-    print(chart_data_json)
     return render(request, "history.html", {"chart_data_json": chart_data_json})
-
-
-
-def users(request):
-    members = User.objects.all().values()
-    print(members)
-    template = loader.get_template("home.html")
-    context = {"users": members[0]}
-    return HttpResponse(template.render(context, request))
 
 
 def test(request):
